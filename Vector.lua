@@ -1,6 +1,13 @@
 Vector = {}
 Vector.__index = Vector
 
+local function isVector(a)
+	if type(a) ~= 'table' then return false end
+	if not a['__index'] then return false end
+	if a.__index == Vector.__index then return true end
+	return false
+end
+
 function Vector:new(x,y)
 	local instance = setmetatable({}, self)
 	
@@ -11,6 +18,7 @@ function Vector:new(x,y)
 end
 
 function Vector:Distance(vector)
+	assert(isVector(vector), 'Tried to get distance between a non-Vector object.')
 	return math.sqrt( (vector.x - self.x)^2 + (vector.y - self.y)^2 )
 end
 
@@ -31,6 +39,8 @@ function Vector:Sign()
 end
 
 function Vector:Angle(vector)
+	assert(isVector(vector), 'Tried to get angle between a non-Vector object.')
+
 	local deltaX = vector.x - self.x
 	local deltaY = vector.y - self.y
 	
@@ -38,6 +48,7 @@ function Vector:Angle(vector)
 end
 
 function Vector:Min(vector)
+	assert(isVector(vector), 'Tried to get min between a non-Vector object.')
 	if (self < vector) then
 		return self
 	end
@@ -45,6 +56,7 @@ function Vector:Min(vector)
 end
 
 function Vector:Max(vector)
+	assert(isVector(vector), 'Tried to get max between a non-Vector object.')
 	if (self > vector) then
 		return self
 	end
@@ -52,6 +64,7 @@ function Vector:Max(vector)
 end
 
 function Vector:Dot(vector)
+	assert(isVector(vector), 'Tried to get dot between a non-Vector object.')
 	return self.x * vector.x + self.y * vector.y
 end
 
@@ -70,37 +83,46 @@ function Vector:__tostring()
 end
 
 function Vector.__add(vector1, vector2)
-	return Vector:new(vector1.x + vector2.x, vector1.y + vector2.y)
+	if isVector(vector2) then return Vector:new(vector1.x + vector2.x, vector1.y + vector2.y) end
+	return Vector:new(vector1.x + vector2, vector1.y + vector2)
 end
 
 function Vector.__sub(vector1, vector2)
-	return Vector:new(vector1.x - vector2.x, vector1.y - vector2.y)
+	if isVector(vector2) then return Vector:new(vector1.x - vector2.x, vector1.y - vector2.y) end
+	return Vector:new(vector1.x - vector2, vector1.y - vector2)
 end
 
 function Vector.__mul(vector1, vector2)
-	return Vector:new(vector1.x * vector2.x, vector1.y * vector2.y)
+	if isVector(vector2) then return Vector:new(vector1.x * vector2.x, vector1.y * vector2.y) end
+	return Vector:new(vector1.x * vector2, vector1.y * vector2)
 end
 
 function Vector.__div(vector1, vector2)
-	return Vector:new(vector1.x / vector2.x, vector1.y / vector2.y)
+	if isVector(vector2) then return Vector:new(vector1.x / vector2.x, vector1.y / vector2.y) end
+	return Vector:new(vector1.x / vector2, vector1.y / vector2)
 end
 
 function Vector.__mod(vector1, vector2)
-	return Vector:new(vector1.x % vector2.x, vector1.y % vector2.y)
+	if isVector(vector2) then return Vector:new(vector1.x % vector2.x, vector1.y % vector2.y) end
+	return Vector:new(vector1.x % vector2, vector1.y % vector2)
 end
 
 function Vector.__pow(vector1, vector2)
-	return Vector:new(vector1.x ^ vector2.x, vector1.y ^ vector2.y)
+	if isVector(vector2) then return Vector:new(vector1.x ^ vector2.x, vector1.y ^ vector2.y) end
+	return Vector:new(vector1.x ^ vector2, vector1.y ^ vector2)
 end
 
 function Vector.__eq(vector1, vector2)
+	if not isVector(vector2) then return false end
 	return (vector1.x == vector2.x) and (vector1.y == vector2.y)
 end
 
 function Vector.__lt(vector1, vector2)
+	if not isVector(vector2) then return false end
 	return (vector1.x < vector2.x) and (vector1.y < vector2.y)
 end
 
 function Vector.__le(vector1, vector2)
+	if not isVector(vector2) then return false end
 	return (vector1.x <= vector2.x) and (vector1.y <= vector2.y)
 end
