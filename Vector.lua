@@ -64,27 +64,27 @@ function Vector:__tostring()
 end
 
 function Vector.__add(vector1, vector2)
-	return Vector:new(vector1.x + vector1.x, vector1.y + vector2.y)
+	return Vector:new(vector1.x + vector2.x, vector1.y + vector2.y)
 end
 
 function Vector.__sub(vector1, vector2)
-	return Vector:new(vector1.x - vector1.x, vector1.y - vector2.y)
+	return Vector:new(vector1.x - vector2.x, vector1.y - vector2.y)
 end
 
 function Vector.__mul(vector1, vector2)
-	return Vector:new(vector1.x * vector1.x, vector1.y * vector2.y)
+	return Vector:new(vector1.x * vector2.x, vector1.y * vector2.y)
 end
 
 function Vector.__div(vector1, vector2)
-	return Vector:new(vector1.x / vector1.x, vector1.y / vector2.y)
+	return Vector:new(vector1.x / vector2.x, vector1.y / vector2.y)
 end
 
 function Vector.__mod(vector1, vector2)
-	return Vector:new(vector1.x % vector1.x, vector1.y % vector2.y)
+	return Vector:new(vector1.x % vector2.x, vector1.y % vector2.y)
 end
 
 function Vector.__pow(vector1, vector2)
-	return Vector:new(vector1.x ^ vector1.x, vector1.y ^ vector2.y)
+	return Vector:new(vector1.x ^ vector2.x, vector1.y ^ vector2.y)
 end
 
 function Vector.__eq(vector1, vector2)
