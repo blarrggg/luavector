@@ -38,11 +38,17 @@ function Vector:Angle(vector)
 end
 
 function Vector:Min(vector)
-	return Vector:new( math.min(self.x, vector.x), math.min(self.y, vector.y) )
+	if (self < vector) then
+		return self
+	end
+	return vector
 end
 
 function Vector:Max(vector)
-	return Vector:new( math.max(self.x, vector.x), math.max(self.y, vector.y) )
+	if (self > vector) then
+		return self
+	end
+	return vector
 end
 
 function Vector:Dot(vector)
