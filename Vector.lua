@@ -22,6 +22,19 @@ function Vector:Distance(vector)
 	return math.sqrt( (vector.x - self.x)^2 + (vector.y - self.y)^2 )
 end
 
+function Vector:Normalize()
+	local length = self:Distance(Vector:new(0, 0)) -- Distance from the origin
+	if length == 0 then
+		return Vector:new(0, 0) -- Return zero vector if length is zero to avoid division by zero
+	end
+	return Vector:new(self.x / length, self.y / length)
+end
+
+function Vector:Direction(vector)
+	assert(isVector(vector), 'Tried to get direction between a non-Vector object.')
+	return Vector:new(vector.x - self.x, vector.y - self.y):Normalize()
+end
+
 function Vector:Abs()
 	return Vector:new( math.abs(self.x), math.abs(self.y) )
 end
